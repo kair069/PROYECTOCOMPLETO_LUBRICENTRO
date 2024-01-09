@@ -1,0 +1,68 @@
+/* Reset de estilos */
+body, h1, h2, h3, p, input, button, select {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilo del formulario */
+form {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f8f9fa;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo de las etiquetas y campos de entrada */
+label {
+    flex: 0 0 calc(50% - 10px);
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #333;
+}
+
+input, select {
+    width: calc(50% - 10px);
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    transition: border-color 0.3s ease-in-out;
+}
+
+input[type="checkbox"] {
+    width: auto;
+}
+
+input:focus, select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Estilo del botón */
+button {
+    background-color: #007bff;
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Estilo responsivo */
+@media (max-width: 768px) {
+    label, input, select {
+        width: 100%;
+    }
+}

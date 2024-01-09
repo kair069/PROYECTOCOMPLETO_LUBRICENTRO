@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Venta de Vehículos</title>
+    <link rel="stylesheet" href="../estilos/estiloventaenvio.css">
+    <style>
+
+    </style>
+</head>
+
+<body>
+
+    <form id="ventaForm">
+        <label for="clienteId">ID del cliente:</label>
+        <input type="number" id="clienteId" name="clienteId" required>
+
+        <label for="marca">Marca del vehículo:</label>
+        <input type="text" id="marca" name="marca" required>
+
+        <label for="modelo">Modelo del vehículo:</label>
+        <input type="text" id="modelo" name="modelo" required>
+
+        <label for="ano">Año del vehículo:</label>
+        <input type="number" id="ano" name="ano" required>
+
+        <label for="tipoAceite">Tipo de aceite:</label>
+        <input type="text" id="tipoAceite" name="tipoAceite" required>
+
+        <label for="cantidadAceite">Cantidad de aceite:</label>
+        <input type="number" id="cantidadAceite" name="cantidadAceite" required>
+
+        <label for="kilometraje">Kilometraje actual:</label>
+        <input type="number" id="kilometraje" name="kilometraje" required>
+
+        <label for="cambioFiltro">Cambio de filtro de aceite (1 para sí, 0 para no):</label>
+        <input type="number" id="cambioFiltro" name="cambioFiltro" required>
+
+        <label for="cambioFluidos">Cambio de otros fluidos (1 para sí, 0 para no):</label>
+        <input type="number" id="cambioFluidos" name="cambioFluidos" required>
+
+        <label for="notasInspeccion">Notas de inspección:</label>
+        <input type="text" id="notasInspeccion" name="notasInspeccion">
+
+        <label for="costoAceite">Costo del aceite:</label>
+        <input type="number" id="costoAceite" name="costoAceite" required>
+
+        <label for="costoServicio">Costo del servicio:</label>
+        <input type="number" id="costoServicio" name="costoServicio" required>
+
+        <label for="estadoVehiculo">Estado del vehículo:</label>
+        <input type="text" id="estadoVehiculo" name="estadoVehiculo" required>
+
+        <label for="recomendaciones">Recomendaciones:</label>
+        <input type="text" id="recomendaciones" name="recomendaciones">
+
+        <label for="tecnicoEncargado">Técnico encargado:</label>
+        <input type="text" id="tecnicoEncargado" name="tecnicoEncargado" required>
+
+        <button type="button" onclick="enviarFormulario()">Enviar</button>
+        <button type="button" onclick="regresar()">Regresar</button>
+    </form>
+
+    <script>
+        function regresar() {
+            // Redirigir a la página de regreso
+            window.location.href = '../paginas/index5.html';
+        }
+
+        
+        function enviarFormulario() {
+            const formData = {
+                cliente: {
+                    id: parseInt(document.getElementById('clienteId').value),
+                },
+                marcaVehiculo: document.getElementById('marca').value,
+                modeloVehiculo: document.getElementById('modelo').value,
+                anoVehiculo: parseInt(document.getElementById('ano').value),
+                tipoAceite: document.getElementById('tipoAceite').value,
+                cantidadAceite: parseFloat(document.getElementById('cantidadAceite').value),
+                kilometrajeActual: parseInt(document.getElementById('kilometraje').value),
+                cambioFiltroAceite: parseInt(document.getElementById('cambioFiltro').value),
+                cambioOtrosFluidos: parseInt(document.getElementById('cambioFluidos').value),
+                notasInspeccion: document.getElementById('notasInspeccion').value,
+                costoAceite: parseFloat(document.getElementById('costoAceite').value),
+                costoServicio: parseFloat(document.getElementById('costoServicio').value),
+                estadoVehiculo: document.getElementById('estadoVehiculo').value,
+                recomendaciones: document.getElementById('recomendaciones').value,
+                tecnicoEncargado: document.getElementById('tecnicoEncargado').value,
+            };
+        
+            fetch('http://localhost:8081/ventas', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Error del servidor: ${response.status} - ${response.statusText}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Respuesta del servidor:', data);
+        
+                // Lógica adicional después de enviar el formulario
+                if (data.estado === 'success') {
+                    alert('Venta registrada con éxito');
+                    // Puedes redirigir a otra página o hacer otras acciones
+                } else {
+                    alert(`envio: ${data.mensaje}`);
+                }
+            })
+            .catch(error => {
+                console.error('Envio:', error);
+                // Puedes mostrar un mensaje de error al usuario u otras acciones
+            });
+        }
+    </script>
+
+</body>
+
+</html>
+

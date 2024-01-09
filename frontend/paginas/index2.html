@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clientes App</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+      #clientes {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: space-around;
+    }
+    
+    .cliente {
+        border: 1px solid #ddd;
+        padding: 15px;
+        text-align: center;
+        width: 300px;
+        box-sizing: border-box;
+        background-color: #fff;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        transition: transform 0.3s ease-in-out;
+        position: relative;
+    }
+    
+    .cliente:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+    
+    .cliente img {
+        max-width: 100%;
+        height: auto;
+        margin-bottom: 10px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .cliente h3 {
+        margin-bottom: 10px;
+        font-size: 1.5rem;
+        color: #333;
+    }
+    
+    .cliente p {
+        color: #666;
+        margin-bottom: 8px;
+    }
+    
+    .cliente button {
+        background-color: #333;
+        color: white;
+        padding: 0.5rem 1rem;
+        border: none;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: background-color 0.3s ease-in-out;
+    }
+    
+    .cliente button:hover {
+        background-color: #555;
+    }
+    /* Estilos para el formulario de creación de clientes */
+#formulario-cliente {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+#formulario-cliente label {
+  display: block;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+#formulario-cliente input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+#formulario-cliente button {
+  background-color: #333;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+#formulario-cliente button:hover {
+  background-color: #555;
+}
+
+/* Estilos para la modal de edición de clientes */
+#modal-editar {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+#modal-editar .modal-content {
+  background-color: #fff;
+  margin: 10% auto;
+  padding: 20px;
+  width: 80%;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+#modal-editar .close {
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  transition: color 0.3s ease-in-out;
+}
+
+#modal-editar .close:hover {
+  color: black;
+}
+
+#modal-editar h2 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+#modal-editar form {
+  margin-top: 20px;
+}
+
+/* Estilos generales para los campos de texto en formularios */
+/* Estilos generales para los campos de texto en formularios */
+form label {
+  display: block;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+form button {
+  background-color: #333;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+form button:hover {
+  background-color: #555;
+}
+/* Estilos para la modal de creación de clientes */
+#modal-crear {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+#modal-crear .modal-content {
+  background-color: #fff;
+  margin: 10% auto;
+  padding: 20px;
+  width: 80%;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+#modal-crear .close {
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  transition: color 0.3s ease-in-out;
+}
+
+#modal-crear .close:hover {
+  color: black;
+}
+
+#modal-crear h2 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+#modal-crear form {
+  margin-top: 20px;
+}
+#modal-crear .modal-content {
+  background-color: #fff;
+  margin: 5% auto; /* Ajusta el margen superior según tu preferencia */
+  padding: 20px;
+  width: 80%;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+      /* Estilos para el botón */
+      .abrir-modal-boton {
+        background-color: #3498db;
+        color: #fff;
+        padding: 20px 40px;
+        font-size: 18px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease-in-out;
+        position: fixed;
+        top: 20px;
+        right: 20px;
+      }
+
+      .abrir-modal-boton:hover {
+        background-color: #2980b9;
+      }
+
+/* Ajusta el espacio entre el botón y la parte superior de la ventana */
+.boton-container {
+  position: absolute;
+  top: 50px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  background-color: #333;
+  padding: 15px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 200px;
+}
+
+.button {
+  text-decoration: none;
+  color: #fff;
+  padding: 10px;
+  margin: 5px 0;
+  display: block;
+}
+
+.button:hover {
+  background-color: #555;
+}
+
+.content {
+  margin-left: 200px;
+  padding: 20px;
+}
+
+    </style>
+</head>
+<body>
+  <div class="menu">
+    <a class="button" href="../paginas/index.html" style="--color:#1e9bff;">PRODUCTOS</a>
+    <a class="button" href="../paginas/index2.html" style="--color: #ff1867;">CLIENTES</a>
+    <a class="button" href="../paginas/index3.html" style="--color: #6eff3e;">INVENTARIO</a>
+    <a class="button" href="../paginas/index4.html" style="--color: #6eff3e;">PEDIDOS</a>
+    <a class="button" href="../paginas/index5.html" style="--color: #6eff3e;">VENTAS</a>
+    <a class="button" href="../paginas/boleta.html" style="--color: #6eff3e;">BOLETA</a>
+    <a class="button" href="../paginas/proveedor.html" style="--color: #6eff3e;">PROVEDOR</a>
+    <a class="button" href="../index.html" style="--color: #6eff3e;">MENU</a>
+  </div>
+  
+  <div class="content">
+  <header>
+    <h1>Clientes App</h1>
+  </header>
+
+  
+  
+  <main>
+    <section id="clientes">
+      <!-- Aquí se mostrarán los clientes -->
+    </section>
+  </main>
+
+  <div class="boton-container">
+    <button class="abrir-modal-boton" onclick="abrirModalCrear()">Agregar un nuevo cliente</button>
+  </div>
+<!-- Agrega este código al final del body -->
+<div id="modal-crear" class="modal">
+  <div class="modal-content">
+      <span class="close" onclick="cerrarModalCrear()">×</span>
+      <h2>Crear Cliente</h2>
+      <form id="formulario-cliente-modal">
+          <!-- ... Los campos del formulario ... -->
+          <label for="nombre">Nombre:</label>
+          <input type="text" id="nombre" required>
+      
+          <label for="apellido">Apellido:</label>
+          <input type="text" id="apellido" required>
+      
+          <label for="correo">Correo:</label>
+          <input type="email" id="correo" required>
+      
+          <label for="departamento">Departamento:</label>
+          <input type="text" id="departamento" required>
+      
+          <label for="dni">DNI:</label>
+          <input type="text" id="dni" required>
+      
+          <label for="numeroDeTelefono">Número de Teléfono:</label>
+          <input type="text" id="numeroDeTelefono" required>
+      
+          <label for="pais">País:</label>
+          <input type="text" id="pais" required>
+      
+          <label for="ubicacionDeVivienda">Ubicación de Vivienda:</label>
+          <input type="text" id="ubicacionDeVivienda" required>
+      
+          <label for="enlaceImagen">Enlace de Imagen:</label>
+          <input type="text" id="enlaceImagen" required>
+          <button type="button" onclick="guardarClienteModal()">Crear Cliente</button>
+      </form>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- Formulario para crear clientes -->
+  <!-- <form id="formulario-cliente">
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" required>
+
+    <label for="apellido">Apellido:</label>
+    <input type="text" id="apellido" required>
+
+    <label for="correo">Correo:</label>
+    <input type="email" id="correo" required>
+
+    <label for="departamento">Departamento:</label>
+    <input type="text" id="departamento" required>
+
+    <label for="dni">DNI:</label>
+    <input type="text" id="dni" required>
+
+    <label for="numeroDeTelefono">Número de Teléfono:</label>
+    <input type="text" id="numeroDeTelefono" required>
+
+    <label for="pais">País:</label>
+    <input type="text" id="pais" required>
+
+    <label for="ubicacionDeVivienda">Ubicación de Vivienda:</label>
+    <input type="text" id="ubicacionDeVivienda" required>
+
+    <label for="enlaceImagen">Enlace de Imagen:</label>
+    <input type="text" id="enlaceImagen" required>
+
+    <button type="submit">Crear Cliente</button>
+  </form> -->
+
+  <!-- Modal para editar clientes -->
+  <div id="modal-editar" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="cerrarModalEditar()">×</span>
+      <h2>Editar Cliente</h2>
+      <form id="formulario-editar">
+        <input type="hidden" id="editId" />
+        <label for="editNombre">Nombre:</label>
+        <input type="text" id="editNombre" required>
+
+        <label for="editApellido">Apellido:</label>
+        <input type="text" id="editApellido" required>
+
+        <label for="editCorreo">Correo:</label>
+        <input type="email" id="editCorreo" required>
+
+        <label for="editDepartamento">Departamento:</label>
+        <input type="text" id="editDepartamento" required>
+
+        <label for="editDni">DNI:</label>
+        <input type="text" id="editDni" required>
+
+        <label for="editNumeroDeTelefono">Número de Teléfono:</label>
+        <input type="text" id="editNumeroDeTelefono" required>
+
+        <label for="editPais">País:</label>
+        <input type="text" id="editPais" required>
+
+        <label for="editUbicacionDeVivienda">Ubicación de Vivienda:</label>
+        <input type="text" id="editUbicacionDeVivienda" required>
+
+        <label for="editEnlaceImagen">Enlace de Imagen:</label>
+        <input type="text" id="editEnlaceImagen" required>
+
+        <button type="submit" onclick="guardarEdicion()">Guardar Cambios</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+  <footer>
+    <p>© 2023 Clientes App</p>
+  </footer>
+
+  <!-- Importar el script de JavaScript específico para Cliente -->
+  <script>
+    function guardarClienteModal() {
+      const nombre = document.getElementById('nombre').value;
+      const apellido = document.getElementById('apellido').value;
+      const correo = document.getElementById('correo').value;
+      const departamento = document.getElementById('departamento').value;
+      const dni = document.getElementById('dni').value;
+      const numeroDeTelefono = document.getElementById('numeroDeTelefono').value;
+      const pais = document.getElementById('pais').value;
+      const ubicacionDeVivienda = document.getElementById('ubicacionDeVivienda').value;
+      const enlaceImagen = document.getElementById('enlaceImagen').value;
+  
+      crearCliente({
+        nombre,
+        apellido,
+        correo,
+        departamento,
+        dni,
+        numeroDeTelefono,
+        pais,
+        ubicacionDeVivienda,
+        enlaceImagen
+      });
+  
+      // Cierra el modal después de guardar el cliente
+      cerrarModalCrear();
+    }
+    function abrirModalCrear() {
+      document.getElementById('modal-crear').style.display = 'block';
+    }
+    function cerrarModalCrear() {
+      document.getElementById('modal-crear').style.display = 'none';
+    }
+
+        // Enfoca automáticamente el botón al cargar la página
+        window.addEventListener('load', function() {
+          document.querySelector('.abrir-modal-boton').focus();
+        });
+  </script>
+  <script src="../scripts/cliente.js"></script>
+</body>
+</html>

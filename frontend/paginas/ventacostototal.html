@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Total de Venta</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Calculadora de Total de Venta</h1>
+    <label for="ventaId">ID de Venta:</label>
+    <input type="text" id="ventaId" placeholder="Ingrese el ID de la venta">
+    <button onclick="calcularTotalVenta()">Calcular Total</button>
+    <p id="resultado"></p>
+
+    <script>
+        function calcularTotalVenta() {
+            const ventaId = document.getElementById("ventaId").value;
+
+            // Hacer la solicitud GET a la API
+            fetch(`http://localhost:8081/ventas/${ventaId}/total`)
+                .then(response => response.json())
+                .then(data => {
+                    // Mostrar el resultado en la página
+                    document.getElementById("resultado").innerHTML = `Total de la venta: $${data}`;
+                })
+                .catch(error => {
+                    console.error('Error al obtener el total de la venta:', error);
+                    document.getElementById("resultado").innerHTML = 'Error al obtener el total de la venta';
+                });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PRODUCTOS LUBRICENTRO ALEXANDRO</title>
+  <link rel="stylesheet" href="../styles.css">
+
+
+  <style>
+    /* Agregamos estilos específicos para el buscador y el diseño responsive */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    header {
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      padding: 1em 0;
+    }
+
+    main {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    #productos {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .producto {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s;
+    }
+
+    .producto:hover {
+      transform: translateY(-5px);
+    }
+
+    form {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    input {
+      flex: 1;
+      padding: 8px;
+      margin-right: 10px;
+    }
+
+    button {
+      padding: 10px;
+      background-color: #4caf50;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    /* Estilos adicionales para hacer responsive */
+    @media screen and (max-width: 600px) {
+      #productos {
+        grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+      }
+
+      form {
+        flex-direction: column;
+      }
+
+      input {
+        margin-right: 0;
+        margin-bottom: 10px;
+      }
+    }
+
+    #formulario-producto {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+
+    #formulario-producto label {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    #formulario-producto input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    #formulario-producto button {
+      background-color: #4caf50;
+      color: white;
+      padding: 15px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    #formulario-producto button:hover {
+      background-color: #45a049;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+    }
+
+    .menu {
+      display: flex;
+      flex-direction: column;
+      background-color: #333;
+      padding: 15px;
+      position: fixed;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 200px;
+    }
+
+    .button {
+      text-decoration: none;
+      color: #fff;
+      padding: 10px;
+      margin: 5px 0;
+      display: block;
+    }
+
+    .button:hover {
+      background-color: #555;
+    }
+
+    .content {
+      margin-left: 200px;
+      padding: 20px;
+    }
+  </style>
+</head>
+
+<body
+  background="https://static.vecteezy.com/system/resources/previews/010/635/516/non_2x/pretty-background-with-simple-flowers-and-pastel-blue-colors-vector.jpg">
+
+  <div class="menu">
+    <a class="button" href="../paginas/index.html" style="--color:#1e9bff;">PRODUCTOS</a>
+    <a class="button" href="../paginas/index2.html" style="--color: #ff1867;">CLIENTES</a>
+    <a class="button" href="../paginas/index3.html" style="--color: #6eff3e;">INVENTARIO</a>
+    <a class="button" href="../paginas/index4.html" style="--color: #6eff3e;">PEDIDOS</a>
+    <a class="button" href="../paginas/index5.html" style="--color: #6eff3e;">VENTAS</a>
+    <a class="button" href="../paginas/boleta.html" style="--color: #6eff3e;">BOLETA</a>
+    <a class="button" href="../paginas/proveedor.html" style="--color: #6eff3e;">PROVEDOR</a>
+    <a class="button" href="../index.html" style="--color: #6eff3e;">MENU</a>
+  </div>
+  <div class="content">
+    <header>
+      <h1>PRODUCTOS LUBRICENTRO ALEXANDRO</h1>
+    </header>
+    <!-- Agrega este campo de búsqueda antes de tu lista de productos -->
+    <label for="buscar">Buscar:</label>
+    <input type="text" id="buscar" oninput="filtrarProductos()">
+
+
+
+    <!-- Botón de Regreso -->
+    <button onclick="goBack()">
+      <a class="button" href="../index.html">regresar</a>
+
+    </button>
+    <!-- Formulario para crear productos -->
+    <form id="formulario-producto">
+      <label for="nombre">Nombre:</label>
+      <input type="text" id="nombre" required>
+
+      <label for="precio">Precio:</label>
+      <input type="number" id="precio" required>
+
+      <label for="stock">Stock:</label>
+      <input type="number" id="stock" required>
+
+      <button type="submit">Crear Producto</button>
+    </form>
+
+    <main id="main-container">
+      <section id="productos">
+        <!-- Aquí se mostrarán los productos -->
+      </section>
+
+    </main>
+
+
+    <div id="boleta-modal" className="modal">
+      <div className="modal-content">
+        <span className="close" onClick={closeBoletaModal}>×</span>
+        <h2>Boleta</h2>
+        <div id="boleta-content">
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Formulario para crear productos -->
+
+
+    <!-- Modal para editar productos -->
+    <div id="modal-editar" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="cerrarModalEditar()">×</span>
+        <h2>Editar Producto</h2>
+        <form id="formulario-editar">
+          <input type="hidden" id="editId" />
+          <label for="editNombre">Nombre:</label>
+          <input type="text" id="editNombre" required>
+
+          <label for="editPrecio">Precio:</label>
+          <input type="number" id="editPrecio" required>
+
+          <label for="editStock">Stock:</label>
+          <input type="number" id="editStock" required>
+
+          <button type="button" onclick="guardarEdicion()">Guardar Cambios</button>
+        </form>
+      </div>
+    </div>
+
+    <footer>
+      <p>Creado por alex sandro cayllahua chire</p>
+    </footer>
+
+  </div>
+  <script>
+    function goBack() {
+      window.history.back();
+    }
+  </script>
+
+  <!-- Importar el script de JavaScript -->
+  <script src="../scripts/main.js"></script>
+</body>
+
+</html>

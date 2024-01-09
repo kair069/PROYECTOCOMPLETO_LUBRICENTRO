@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frontend App</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        /* Agrega estilos generales */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        main {
+            padding: 2rem;
+        }
+
+        /* Estilos para la sección de pedidos */
+        #pedidos {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .pedido {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin: 1rem;
+            padding: 1rem;
+            width: calc(33.33% - 2rem);
+            /* Hace que cada pedido ocupe el 33.33% del ancho, con un margen de 1rem */
+        }
+
+        .pedido h3 {
+            color: #333;
+        }
+
+        .pedido p {
+            margin: 0.5rem 0;
+            color: #555;
+        }
+
+        /* Botones */
+        button {
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 600px;
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-content {
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #888;
+        }
+
+        /* Estilos para los formularios */
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        form label {
+            margin-bottom: 0.5rem;
+            color: #555;
+        }
+
+        form input {
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        /* Añade un contenedor para los botones del formulario */
+        .form-buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Ajusta el estilo del botón */
+        form button {
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        form button:hover {
+            background-color: #2980b9;
+        }
+
+        /* Estilos para los botones adicionales */
+        .button-ver-nombre {
+            background-color: #2ecc71;
+            /* Color de fondo verde */
+            color: #fff;
+            /* Color de texto blanco */
+        }
+
+        .menu {
+            display: flex;
+            flex-direction: column;
+            background-color: #333;
+            padding: 15px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 200px;
+        }
+
+        .button {
+            text-decoration: none;
+            color: #fff;
+            padding: 10px;
+            margin: 5px 0;
+            display: block;
+        }
+
+        .button:hover {
+            background-color: #555;
+        }
+
+        .content {
+            margin-left: 200px;
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="menu">
+        <a class="button" href="../paginas/index.html" style="--color:#1e9bff;">PRODUCTOS</a>
+        <a class="button" href="../paginas/index2.html" style="--color: #ff1867;">CLIENTES</a>
+        <a class="button" href="../paginas/index3.html" style="--color: #6eff3e;">INVENTARIO</a>
+        <a class="button" href="../paginas/index4.html" style="--color: #6eff3e;">PEDIDOS</a>
+        <a class="button" href="../paginas/index5.html" style="--color: #6eff3e;">VENTAS</a>
+        <a class="button" href="../paginas/boleta.html" style="--color: #6eff3e;">BOLETA</a>
+        <a class="button" href="../paginas/proveedor.html" style="--color: #6eff3e;">PROVEDOR</a>
+        <a class="button" href="../index.html" style="--color: #6eff3e;">MENU</a>
+    </div>
+
+
+    <div class="content">
+        <header>
+            <h1>Frontend App</h1>
+        </header>
+
+        <br>
+        <button id="abrir-modal-agregar" onclick="abrirModalAgregar()">Crear Pedido</button>
+        <main>
+            <section id="pedidos">
+                <!-- Aquí se mostrarán los pedidos -->
+                <!-- Agrega este botón al final del bloque HTML de cada pedido -->
+
+            </section>
+
+        </main>
+
+        <!-- Añade este botón en tu HTML -->
+
+
+        <!-- Añade este modal en tu HTML -->
+        <div id="modal-agregar" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="cerrarModalAgregar()">×</span>
+                <h2>Crear Pedido</h2>
+                <form id="formulario-pedido">
+                    <!-- Agrega los campos necesarios para agregar un pedido -->
+                    <label for="clienteId">ID del Cliente:</label>
+                    <input type="number" id="clienteId" required>
+
+                    <label for="fechaPedido">Fecha del Pedido:</label>
+                    <input type="datetime-local" id="fechaPedido" required>
+
+                    <label for="estadoPedido">Estado del Pedido:</label>
+                    <input type="text" id="estadoPedido" required>
+
+                    <label for="direccionEnvio">Dirección de Envío:</label>
+                    <input type="text" id="direccionEnvio" required>
+
+                    <label for="metodoPago">Método de Pago:</label>
+                    <input type="text" id="metodoPago" required>
+
+                    <label for="totalPedido">Total del Pedido:</label>
+                    <input type="number" id="totalPedido" required>
+
+                    <label for="numeroSeguimiento">Número de Seguimiento:</label>
+                    <input type="text" id="numeroSeguimiento" required>
+
+                    <label for="comentarios">Comentarios:</label>
+                    <input type="text" id="comentarios" required>
+
+                    <label for="codigoDescuento">Código de Descuento:</label>
+                    <input type="text" id="codigoDescuento" required>
+
+                    <label for="descuentoAplicado">Descuento Aplicado:</label>
+                    <input type="number" id="descuentoAplicado" required>
+
+                    <button type="button" onclick="enviarPedido()">Enviar Pedido</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Añade este modal en tu HTML -->
+        <div id="modal-editar" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="cerrarModalEditar()">×</span>
+                <h2>Editar Pedido</h2>
+                <form id="formulario-editar">
+                    <input type="hidden" id="editId" />
+                    <label for="editClienteId">ID del Cliente:</label>
+                    <input type="number" id="editClienteId" required />
+
+                    <label for="editFechaPedido">Fecha del Pedido:</label>
+                    <input type="datetime-local" id="editFechaPedido" required />
+
+                    <label for="editEstadoPedido">Estado del Pedido:</label>
+                    <input type="text" id="editEstadoPedido" required />
+
+                    <label for="editDireccionEnvio">Dirección de Envío:</label>
+                    <input type="text" id="editDireccionEnvio" required />
+
+                    <label for="editMetodoPago">Método de Pago:</label>
+                    <input type="text" id="editMetodoPago" required />
+
+                    <label for="editTotalPedido">Total del Pedido:</label>
+                    <input type="number" id="editTotalPedido" required />
+
+                    <label for="editNumeroSeguimiento">Número de Seguimiento:</label>
+                    <input type="text" id="editNumeroSeguimiento" required />
+
+                    <label for="editComentarios">Comentarios:</label>
+                    <input type="text" id="editComentarios" required />
+
+                    <label for="editCodigoDescuento">Código de Descuento:</label>
+                    <input type="text" id="editCodigoDescuento" required />
+
+                    <label for="editDescuentoAplicado">Descuento Aplicado:</label>
+                    <input type="number" id="editDescuentoAplicado" required />
+
+                    <button type="button" onclick="guardarEdicion()">Guardar Cambios</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="../scripts/pedidos.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            obtenerPedidos();
+
+            document.getElementById('formulario-pedido').addEventListener('submit', function (event) {
+                event.preventDefault();
+                enviarPedido();
+            });
+        });
+
+        function abrirModalAgregar() {
+            document.getElementById('modal-agregar').style.display = 'block';
+        }
+
+        function cerrarModalAgregar() {
+            document.getElementById('modal-agregar').style.display = 'none';
+        }
+
+        function verNombreCliente(clienteId) {
+            // Realiza una solicitud para obtener el nombre del cliente con el clienteId
+            fetch(`http://localhost:8081/clientes/${clienteId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(cliente => {
+                    alert(`Nombre del Cliente: ${cliente.nombre}`);
+                })
+                .catch(error => {
+                    console.error('Error en la solicitud:', error);
+                });
+        }
+    </script>
+</body>
+
+</html>

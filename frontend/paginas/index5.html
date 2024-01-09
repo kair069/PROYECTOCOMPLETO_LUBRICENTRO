@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ventas</title>
+    <!-- Agrega cualquier enlace a CSS necesario para tu diseño -->
+    <link rel="stylesheet" href="../estilos/ventas.css">
+</head>
+
+<body>
+
+    <div class="menu">
+        <a class="menu-button" href="../paginas/index.html">PRODUCTOS</a>
+        <a class="menu-button" href="../paginas/index2.html">CLIENTES</a>
+        <a class="menu-button" href="../paginas/index3.html">INVENTARIO</a>
+        <a class="menu-button" href="../paginas/index4.html">PEDIDOS</a>
+        <a class="menu-button" href="../paginas/index5.html">VENTAS</a>
+        <a class="menu-button" href="../paginas/boleta.html">BOLETA</a>
+        <a class="menu-button" href="../paginas/proveedor.html">PROVEEDOR</a>
+        <a class="menu-button" href="../index.html">MENÚ</a>
+    </div>
+
+    <div class="content">
+
+        <h1>Registro de Ventas</h1>
+
+
+        <div class="button-container">
+            <button id="exportarCSVBtn">Exportar CSV</button>
+
+            <button id="toggleMenuBtn" onclick="toggleMenu()">Esconder Menu y Aparecer</button>
+
+            <button class="btn-enviar" onclick="window.location.href='ventasenvio.html'">ENVIAR NUEVA VENTA</button>
+
+            <div class="search-container">
+                <input type="text" id="marcaInput" placeholder="Ingrese la marca">
+                <button id="buscarPorMarcaBtn">Buscar por Marca</button>
+            </div>
+
+            <div class="search-container">
+                <button id="calculoCostoTotalBtn" onclick="window.location.href='ventacostototal.html'">CALCULO DEL
+                    COSTO TOTAL</button>
+            </div>
+        </div>
+
+        <ul id="listaVentas" class="ventas-list"></ul>
+        <div class="table-container">
+            <table id="ventasTable" class="ventas-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Marca Vehiculo</th>
+                        <th>Modelo Vehiculo</th>
+                        <th>Año Vehiculo</th>
+                        <th>Tipo de Aceite</th>
+                        <th>Cantidad de Aceite</th>
+                        <th>Kilometraje Actual</th>
+                        <th>Cambio de Filtro de Aceite</th>
+                        <th>Cambio de Otros Fluidos</th>
+                        <th>Notas de Inspección</th>
+                        <th>Costo de Aceite</th>
+                        <th>Costo de Servicio</th>
+                        <th>Estado del Vehiculo</th>
+                        <th>Recomendaciones</th>
+                        <th>Técnico Encargado</th>
+                        <th>Fecha de Venta</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="ventasBody"></tbody>
+            </table>
+        </div>
+        <!-- Modal de Edición -->
+        <div id="modal" class="modal">
+            <form id="modalForm" class="modal-form">
+                <label for="editMarcaVehiculo">Marca Vehiculo:</label>
+                <input type="text" id="editMarcaVehiculo" name="editMarcaVehiculo" required>
+                <button type="button" onclick="editarVenta()">Guardar Cambios</button>
+            </form>
+        </div>
+
+        <form id="ventaForm" class="venta-form">
+            <!-- Tus campos de formulario aquí -->
+        </form>
+    </div>
+    </div>
+
+    <script src="../scripts/ventas.js"></script>
+    <script>
+        // Agrega este código en tu archivo JavaScript
+
+        document.addEventListener("DOMContentLoaded", function () {
+            // Obtén referencias a los elementos HTML
+            const buscarPorMarcaBtn = document.getElementById("buscarPorMarcaBtn");
+            const marcaInput = document.getElementById("marcaInput");
+            const listaVentas = document.getElementById("listaVentas");
+
+            // Agrega un evento al botón de búsqueda
+            buscarPorMarcaBtn.addEventListener("click", function () {
+                // Obtiene el valor del campo de entrada
+                const marca = marcaInput.value;
+
+                // Realiza la solicitud GET al backend
+                fetch(`http://localhost:8081/ventas/buscarPorMarca/${marca}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        // Limpia la lista de ventas
+                        listaVentas.innerHTML = "";
+
+                        // Muestra los resultados en la lista
+                        data.forEach(venta => {
+                            const listItem = document.createElement("li");
+                            listItem.textContent = `ID: ${venta.id}, Cliente: ${venta.cliente.nombre}, Marca: ${venta.marcaVehiculo}`;
+                            listaVentas.appendChild(listItem);
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error al realizar la búsqueda:', error);
+                    });
+            });
+        });
+
+        document.getElementById('exportarCSVBtn').addEventListener('click', function () {
+            // Realiza la solicitud GET al endpoint /exportarCSV
+            fetch('http://localhost:8081/ventas/exportarCSV')
+                .then(response => response.blob())
+                .then(blob => {
+                    // Crea un enlace de descarga y simula un clic para iniciar la descarga
+                    const url = window.URL.createObjectURL(new Blob([blob]));
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'ventas.csv';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                })
+                .catch(error => console.error('Error al exportar CSV:', error));
+        });
+
+
+
+        function toggleMenu() {
+            const menu = document.querySelector('.menu');
+            const content = document.querySelector('.content');
+        
+            // Cambia la visibilidad del menú
+            menu.style.display = menu.style.display === 'none' || menu.style.display === '' ? 'flex' : 'none';
+        
+            // Ajusta el margen izquierdo del contenido para que coincida con la visibilidad del menú
+            content.style.marginLeft = menu.style.display === 'none' ? '0' : '200px';
+        }
+    </script>
+
+</body>
+
+</html>

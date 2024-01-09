@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../estilos/estiloboleta.css">
+    <title>CRUD Boletas</title>
+    <style>
+        .menu {
+            display: flex;
+            flex-direction: column;
+            background-color: #333;
+            padding: 15px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 200px;
+          }
+      
+          .button {
+            text-decoration: none;
+            color: #fff;
+            padding: 10px;
+            margin: 5px 0;
+            display: block;
+          }
+      
+          .button:hover {
+            background-color: #555;
+          }
+      
+          .content {
+            margin-left: 200px;
+            padding: 20px;
+          }
+    </style>
+</head>
+
+<body>
+
+    <div class="menu">
+        <a class="button" href="../paginas/index.html" style="--color:#1e9bff;">PRODUCTOS</a>
+        <a class="button" href="../paginas/index2.html" style="--color: #ff1867;">CLIENTES</a>
+        <a class="button" href="../paginas/index3.html" style="--color: #6eff3e;">INVENTARIO</a>
+        <a class="button" href="../paginas/index4.html" style="--color: #6eff3e;">PEDIDOS</a>
+        <a class="button" href="../paginas/index5.html" style="--color: #6eff3e;">VENTAS</a>
+        <a class="button" href="../paginas/boleta.html" style="--color: #6eff3e;">BOLETA</a>
+        <a class="button" href="../paginas/proveedor.html" style="--color: #6eff3e;">PROVEDOR</a>
+        <a class="button" href="../index.html" style="--color: #6eff3e;">MENU</a>
+    </div>
+    <div class="content">
+        <button onclick="goBack()">
+            <a class="button" href="../index.html">regresar</a>
+
+        </button>
+        <div id="app">
+            <h1>CRUD Boletas</h1>
+            <button onclick="getBoletas()">Obtener Boletas</button>
+            <ul id="boletas-list">
+
+
+
+
+            </ul>
+            <button onclick="showCreateForm()">Crear Nueva Boleta</button>
+
+            <!-- Formulario de Creación -->
+            <!-- Formulario de Creación -->
+            <div id="create-form" style="display: none;">
+                <h2>Crear Nueva Boleta</h2>
+                <label for="fecha">Fecha:</label>
+                <input type="date" id="fecha" required><br>
+                <label for="cliente-id">ID del Cliente:</label>
+                <input type="text" id="cliente-id" required><br>
+                <button onclick="submitCreateForm()">Guardar Boleta</button>
+            </div>
+            <div id="boleta-modal">
+                <div id="modal-content">
+                    <button onclick="closeBoletaModal()">Cerrar</button>
+                    <button onclick="printBoleta()">Imprimir Boleta</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../scripts/boleta.js"></script>
+
+</body>
+
+</html>

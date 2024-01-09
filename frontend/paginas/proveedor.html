@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consumir API</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../estilos/estiloproveedor.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        #app {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+
+        #botones-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+        #botones-container button {
+            padding: 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            background-color: #3498db;
+            color: #fff;
+            width: 100%;
+            box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+        }
+
+        #botones-container button:hover {
+            background-color: #2980b9;
+        }
+
+        #resultado-container {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 20px;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+        }
+
+        #resultado {
+            width: 100%;
+            max-width: 600px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            background-color: #fff;
+        }
+
+        /* Estilos para el modal */
+        .modal-dialog {
+            max-width: 800px;
+        }
+
+        .modal-content {
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            background-color: #fff;
+        }
+
+        .modal-header {
+            border-bottom: 1px solid #dee2e6;
+            padding: 15px;
+            text-align: center;
+            background-color: #3498db;
+            color: #fff;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .modal-footer {
+            border-top: 1px solid #dee2e6;
+            padding: 15px;
+            text-align: center;
+            background-color: #f4f4f4;
+            border-radius: 0 0 10px 10px;
+        }
+        .menu {
+            display: flex;
+            flex-direction: column;
+            background-color: #333;
+            padding: 15px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 200px;
+        }
+
+        .button {
+            text-decoration: none;
+            color: #fff;
+            padding: 10px;
+            margin: 5px 0;
+            display: block;
+        }
+
+        .button:hover {
+            background-color: #555;
+        }
+
+        .content {
+            margin-left: 10%; /* Cambié de píxeles a porcentaje para hacerlo más flexible */
+            padding: 2%; /* También cambié de píxeles a porcentaje */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="menu">
+        <a class="button" href="../paginas/index.html" style="--color:#1e9bff;">PRODUCTOS</a>
+        <a class="button" href="../paginas/index2.html" style="--color: #ff1867;">CLIENTES</a>
+        <a class="button" href="../paginas/index3.html" style="--color: #6eff3e;">INVENTARIO</a>
+        <a class="button" href="../paginas/index4.html" style="--color: #6eff3e;">PEDIDOS</a>
+        <a class="button" href="../paginas/index5.html" style="--color: #6eff3e;">VENTAS</a>
+        <a class="button" href="../paginas/boleta.html" style="--color: #6eff3e;">BOLETA</a>
+        <a class="button" href="../paginas/proveedor.html" style="--color: #6eff3e;">PROVEDOR</a>
+        <a class="button" href="../index.html" style="--color: #6eff3e;">MENU</a>
+    </div>
+    <div class="content">
+<div id="app">
+    <h1>Consumir API</h1>
+
+    <div id="botones-container">
+        <!-- Agregué data-toggle y data-target para activar el modal -->
+        <button class="btn btn-primary" data-toggle="modal" data-target="#modalResultado" onclick="obtenerTodosLosProveedores()">Obtener Todos</button>
+        <button class="btn btn-primary" data-toggle="modal" data-target="#modalResultado" onclick="obtenerProveedorPorId()">Obtener por ID</button>
+        <!-- Agregué data-toggle y data-target para activar el modal -->
+        <button class="btn btn-success" data-toggle="modal" data-target="#modalResultado" onclick="crearNuevoProveedor()">Crear Nuevo</button>
+        <button class="btn btn-warning" data-toggle="modal" data-target="#modalResultado" onclick="actualizarProveedor()">Actualizar</button>
+        <button class="btn btn-danger" data-toggle="modal" data-target="#modalResultado" onclick="eliminarProveedor()">Eliminar</button>
+        <button class="btn btn-info" data-toggle="modal" data-target="#modalResultado" onclick="buscarProveedoresPorNombre()">Buscar por Nombre</button>
+        <button class="btn btn-info" data-toggle="modal" data-target="#modalResultado" onclick="obtenerProveedorPorCorreoElectronico()">Por Correo Electrónico</button>
+        <button class="btn btn-info" data-toggle="modal" data-target="#modalResultado" onclick="obtenerProveedorPorSitioWeb()">Por Sitio Web</button>
+        <button class="btn btn-info" data-toggle="modal" data-target="#modalResultado" onclick="obtenerProveedoresPorRangoFechas()">Por Rango de Fechas</button>
+        <button class="btn btn-secondary" data-toggle="modal" data-target="#modalResultado" onclick="contarTotalProveedores()">Contar Total</button>
+        <!-- Agregué data-toggle y data-target para activar el modal -->
+        <button class="btn btn-dark" data-toggle="modal" data-target="#modalResultado" onClick={listarTodosLosCampos}>Listar Todos los Campos</button>
+    </div>
+
+    <!-- Modal para mostrar resultados -->
+    <div class="modal fade" id="modalResultado" tabindex="-1" role="dialog" aria-labelledby="modalResultadoLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalResultadoLabel">Resultados</h5>
+                </div>
+                <div class="modal-body">
+                    <div id="resultado"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<script src="../scripts/proveedor.js"></script>
+
+<!-- Scripts de Bootstrap -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+</body>
+</html>
+    

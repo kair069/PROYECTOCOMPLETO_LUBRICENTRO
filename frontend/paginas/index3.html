@@ -1,0 +1,206 @@
+<!-- index3.html -->
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listado de Inventarios</title>
+
+    <!-- Agrega la referencia a Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../estilos/estiloinventario.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <style>
+        /* Puedes agregar estilos personalizados aquí si es necesario */
+        body {
+            padding: 20px;
+        }
+
+        .menu {
+            display: flex;
+            flex-direction: column;
+            background-color: #333;
+            padding: 15px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 200px;
+        }
+
+        .button {
+            text-decoration: none;
+            color: #fff;
+            padding: 10px;
+            margin: 5px 0;
+            display: block;
+        }
+
+        .button:hover {
+            background-color: #555;
+        }
+
+        .content {
+            margin-left: 200px;
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="menu">
+        <a class="button" href="../paginas/index.html" style="--color:#1e9bff;">PRODUCTOS</a>
+        <a class="button" href="../paginas/index2.html" style="--color: #ff1867;">CLIENTES</a>
+        <a class="button" href="../paginas/index3.html" style="--color: #6eff3e;">INVENTARIO</a>
+        <a class="button" href="../paginas/index4.html" style="--color: #6eff3e;">PEDIDOS</a>
+        <a class="button" href="../paginas/index5.html" style="--color: #6eff3e;">VENTAS</a>
+        <a class="button" href="../paginas/boleta.html" style="--color: #6eff3e;">BOLETA</a>
+        <a class="button" href="../paginas/proveedor.html" style="--color: #6eff3e;">PROVEDOR</a>
+        <a class="button" href="../index.html" style="--color: #6eff3e;">MENU</a>
+    </div>
+
+    <div class="content">
+        <h1 class="mb-4">Listado de Inventarios</h1>
+
+        <!-- Utiliza clases de Bootstrap para mejorar el diseño -->
+        <ul id="inventario-lista" class="list-group"></ul>
+
+        <!-- Formulario para agregar nuevo inventario -->
+        <form id="nuevoInventarioForm">
+            <div class="form-group">
+                <label for="productoId">ID de Producto:</label>
+                <input type="number" class="form-control" id="productoId" required>
+            </div>
+            <div class="form-group">
+                <label for="cantidad">Cantidad:</label>
+                <input type="number" class="form-control" id="cantidad" required>
+            </div>
+            <div class="form-group">
+                <label for="fechaIngreso">Fecha de Ingreso:</label>
+                <input type="date" class="form-control" id="fechaIngreso" required>
+            </div>
+            <div class="form-group">
+                <label for="fechaCaducidad">Fecha de Caducidad:</label>
+                <input type="date" class="form-control" id="fechaCaducidad" required>
+            </div>
+            <div class="form-group">
+                <label for="kilometraje">Kilometraje último cambio:</label>
+                <input type="number" class="form-control" id="kilometraje" required>
+            </div>
+            <div class="form-group">
+                <label for="tipoAceite">Tipo de Aceite:</label>
+                <input type="text" class="form-control" id="tipoAceite" required>
+            </div>
+            <div class="form-group">
+                <label for="marcaAceite">Marca de Aceite:</label>
+                <input type="text" class="form-control" id="marcaAceite" required>
+            </div>
+            <div class="form-group">
+                <label for="proveedorId">ID de Proveedor:</label>
+                <input type="number" class="form-control" id="proveedorId" required>
+            </div>
+            <button type="button" class="btn btn-primary" id="enviarBtn">Enviar</button>
+        </form>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#nuevoInventarioModal">
+            Nuevo Inventario
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="nuevoInventarioModal" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Nuevo Inventario</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Aquí va tu formulario -->
+                        <form id="nuevoInventarioForm">
+                            <!-- ... Tu formulario actual ... -->
+                            <div class="form-group">
+                                <label for="productoId">ID de Producto:</label>
+                                <input type="number" class="form-control" id="productoId" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="cantidad">Cantidad:</label>
+                                <input type="number" class="form-control" id="cantidad" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="fechaIngreso">Fecha de Ingreso:</label>
+                                <input type="date" class="form-control" id="fechaIngreso" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="fechaCaducidad">Fecha de Caducidad:</label>
+                                <input type="date" class="form-control" id="fechaCaducidad" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="kilometraje">Kilometraje último cambio:</label>
+                                <input type="number" class="form-control" id="kilometraje" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="tipoAceite">Tipo de Aceite:</label>
+                                <input type="text" class="form-control" id="tipoAceite" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="marcaAceite">Marca de Aceite:</label>
+                                <input type="text" class="form-control" id="marcaAceite" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="proveedorId">ID de Proveedor:</label>
+                                <input type="number" class="form-control" id="proveedorId" required>
+                            </div>
+                            <button type="button" class="btn btn-primary" id="enviarBtn">Enviar</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary" id="enviarBtn">Enviar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal para mostrar detalles del inventario -->
+        <div class="modal" id="detallesInventarioModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Detalles del Inventario</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Contenido del modal generado dinámicamente por JavaScript -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- Agrega la referencia a Bootstrap JS y Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <!-- Agrega el script de inventario.js al final del cuerpo del documento -->
+    <script src="../scripts/inventario.js"></script>
+    <script>
+        // Agrega el listener al botón después de que se cargue el DOM
+        document.getElementById('enviarBtn').addEventListener('click', enviarFormulario);
+    </script>
+
+</body>
+
+</html>
